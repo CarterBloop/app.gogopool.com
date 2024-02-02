@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers'
 import { useToast } from '@chakra-ui/react'
 import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
 import { formatEther } from 'ethers/lib/utils'
-import { useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite, useReadContract, useWriteContract } from 'wagmi'
 
 import useClaimNodeOpContract from './contracts/claimNodeOp'
 
@@ -13,7 +13,7 @@ import { DECODED_ERRORS } from '@/utils/consts'
 export const useIsEligible = (owner: HexString) => {
   const { abi, address } = useClaimNodeOpContract()
 
-  return useContractRead({
+  return useReadContract({
     address,
     abi,
     functionName: 'isEligible',
@@ -52,7 +52,7 @@ export const useClaimAndRestake = (
     },
   })
 
-  return useContractWrite({
+  return useWriteContract({
     ...config,
     onSuccess: (data) => {
       onConfirmTransaction()

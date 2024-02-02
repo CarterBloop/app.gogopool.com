@@ -17,7 +17,7 @@ import {
 import { useChainModal } from '@rainbow-me/rainbowkit'
 import { formatEther, parseEther } from 'ethers/lib/utils.js'
 import ms from 'ms'
-import { useAccount, useBalance, useNetwork, useWaitForTransaction } from 'wagmi'
+import { useAccount, useAccount, useBalance, useWaitForTransactionReceipt } from 'wagmi'
 
 import { RewardForm } from './RewardForm'
 import { StakeForm } from './StakeForm'
@@ -129,7 +129,7 @@ export const LiquidStaking: FunctionComponent = () => {
 
   const { openChainModal } = useChainModal()
 
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
 
   const [swapDirection, setSwapDirection] = useState(false) // false for AVAX -> ggAVAX, true for ggAVAX -> AVAX
   const [amount, setAmount] = useState<BigNumber>(parseEther('0')) // stake value
@@ -184,10 +184,10 @@ export const LiquidStaking: FunctionComponent = () => {
     write: redeem,
   } = useRedeem(amount)
 
-  const { status: redeemStatus } = useWaitForTransaction({
+  const { status: redeemStatus } = useWaitForTransactionReceipt({
     hash: redeemData?.hash,
   })
-  const { status: depositStatus } = useWaitForTransaction({
+  const { status: depositStatus } = useWaitForTransactionReceipt({
     hash: depositData?.hash,
   })
 

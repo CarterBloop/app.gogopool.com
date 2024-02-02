@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
 
-import { useContractRead, useNetwork } from 'wagmi'
+import { useAccount, useReadContract } from 'wagmi'
 
 import { storageAddresses } from '../constants/storageAddresses'
 
@@ -8,10 +8,10 @@ import Storage from '@/contracts/Storage'
 import { HexString } from '@/types/cryptoGenerics'
 
 export const useGetUint = (args) => {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const addr = storageAddresses[chain?.id]
 
-  return useContractRead({
+  return useReadContract({
     address: addr,
     abi: Storage,
     functionName: 'getUint',
@@ -33,7 +33,7 @@ export type AllContracts =
   | 'MinipoolStreamliner'
 
 export const useGetAddress = (key: AllContracts, storageAddr?: string) => {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const addr: HexString = storageAddr || storageAddresses[chain?.id]
 
   const args = ethers.utils.solidityKeccak256(
@@ -41,7 +41,8 @@ export const useGetAddress = (key: AllContracts, storageAddr?: string) => {
     ['contract.address', key],
   ) as HexString
 
-  const resp = useContractRead<typeof Storage, string, HexString>({
+  // Removed generic type: <typeof Storage, 'getAddress', HexString>, caused compiler errors
+  const resp = useReadContract({
     address: addr,
     abi: Storage,
     functionName: 'getAddress',

@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { useToast } from '@chakra-ui/react'
 import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
-import { useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite, useReadContract, useWriteContract } from 'wagmi'
 
 import useMinipoolManagerContract from './contracts/minipoolManager'
 import useStakingContract, { useOracleContract } from './contracts/staking'
@@ -43,7 +43,7 @@ export const useStakeGGP = (amount: BigNumber) => {
 
   return {
     refetch,
-    ...useContractWrite({
+    ...useWriteContract({
       ...config,
       onSuccess(data) {
         addRecentTransaction({
@@ -87,7 +87,7 @@ export const useWithdrawGGP = (amount: BigNumber) => {
 
   return {
     refetch,
-    ...useContractWrite({
+    ...useWriteContract({
       ...config,
       onSuccess(data) {
         addRecentTransaction({
@@ -103,7 +103,7 @@ export const useWithdrawGGP = (amount: BigNumber) => {
 export const useGetAVAXStake = (stakerAddr: HexString) => {
   const { abi, address: stakingAddress } = useStakingContract()
 
-  const { data, isError, isLoading } = useContractRead({
+  const { data, isError, isLoading } = useReadContract({
     address: stakingAddress,
     abi,
     functionName: 'getAVAXStake',
@@ -121,7 +121,7 @@ export const useGetAVAXStake = (stakerAddr: HexString) => {
 export const useGetGGPStake = (stakerAddr: HexString, watch = true) => {
   const { abi, address } = useStakingContract()
 
-  const { data, error, isError, isLoading } = useContractRead({
+  const { data, error, isError, isLoading } = useReadContract({
     address,
     abi,
     functionName: 'getGGPStake',
@@ -141,7 +141,7 @@ export const useGetGGPStake = (stakerAddr: HexString, watch = true) => {
 export const useGetAVAXAssigned = (stakerAddr: HexString, watch = true) => {
   const { abi, address } = useStakingContract()
 
-  const { data, error, isError, isLoading } = useContractRead({
+  const { data, error, isError, isLoading } = useReadContract({
     address,
     abi,
     functionName: 'getAVAXAssigned',
@@ -161,7 +161,7 @@ export const useGetAVAXAssigned = (stakerAddr: HexString, watch = true) => {
 export const useGetAVAXValidating = (stakerAddr: HexString, watch = true) => {
   const { abi, address } = useStakingContract()
 
-  const { data, error, isError, isLoading } = useContractRead({
+  const { data, error, isError, isLoading } = useReadContract({
     address,
     abi,
     functionName: 'getAVAXValidating',
@@ -181,7 +181,7 @@ export const useGetAVAXValidating = (stakerAddr: HexString, watch = true) => {
 export const useGetAVAXValidatingHighWater = (stakerAddr: HexString, watch = true) => {
   const { abi, address } = useStakingContract()
 
-  const { data, error, isError, isLoading } = useContractRead({
+  const { data, error, isError, isLoading } = useReadContract({
     address,
     abi,
     functionName: 'getAVAXValidatingHighWater',
@@ -201,7 +201,7 @@ export const useGetAVAXValidatingHighWater = (stakerAddr: HexString, watch = tru
 export const useGetGGPPrice = (watch = true) => {
   const { abi, address } = useOracleContract()
 
-  const { data, error, isError, isLoading } = useContractRead({
+  const { data, error, isError, isLoading } = useReadContract({
     address,
     abi,
     functionName: 'getGGPPriceInAVAX',
@@ -223,7 +223,7 @@ export const useGetGGPPrice = (watch = true) => {
 export const useGetContractCollateralizationRatio = (stakerAddr: HexString, watch = true) => {
   const { abi, address } = useStakingContract()
 
-  const { data, error, isError, isLoading } = useContractRead({
+  const { data, error, isError, isLoading } = useReadContract({
     address,
     abi,
     functionName: 'getCollateralizationRatio',
@@ -241,7 +241,7 @@ export const useGetContractCollateralizationRatio = (stakerAddr: HexString, watc
 
 export const useGetEffectiveRewardsRatio = () => {
   const { abi, address } = useStakingContract()
-  const { data, error, isError, isLoading } = useContractRead({
+  const { data, error, isError, isLoading } = useReadContract({
     address,
     abi,
     functionName: 'getEffectiveRewardsRatio',
@@ -264,7 +264,7 @@ export const useGetEffectiveRewardsRatio = () => {
 
 export const useGetEffectiveGGPStaked = () => {
   const { abi, address } = useStakingContract()
-  const { data, error, isError, isLoading } = useContractRead({
+  const { data, error, isError, isLoading } = useReadContract({
     address,
     abi,
     functionName: 'getEffectiveGGPStaked',
@@ -288,7 +288,7 @@ export const useGetEffectiveGGPStaked = () => {
 export const useGetTotalGGPStake = (watch = true) => {
   const { abi, address } = useStakingContract()
 
-  return useContractRead({
+  return useReadContract({
     address,
     abi,
     functionName: 'getTotalGGPStake',
@@ -299,7 +299,7 @@ export const useGetTotalGGPStake = (watch = true) => {
 export const useGetStakerCount = () => {
   const { abi, address } = useStakingContract()
 
-  return useContractRead({
+  return useReadContract({
     address,
     abi,
     functionName: 'getStakerCount',
@@ -309,7 +309,7 @@ export const useGetStakerCount = () => {
 export const useRequireValidStaker = (stakerAddr: HexString) => {
   const { abi, address } = useStakingContract()
 
-  return useContractRead({
+  return useReadContract({
     address,
     abi,
     functionName: 'requireValidStaker',
@@ -320,7 +320,7 @@ export const useRequireValidStaker = (stakerAddr: HexString) => {
 export const useGetGGPRewards = (stakerAddr: HexString, watch = true) => {
   const { abi, address } = useStakingContract()
 
-  return useContractRead({
+  return useReadContract({
     address,
     abi,
     functionName: 'getGGPRewards',
@@ -332,7 +332,7 @@ export const useGetGGPRewards = (stakerAddr: HexString, watch = true) => {
 export const useGetMinipoolCount = () => {
   const { abi, address } = useMinipoolManagerContract()
 
-  return useContractRead({
+  return useReadContract({
     address,
     abi,
     functionName: 'getMinipoolCount',
@@ -342,7 +342,7 @@ export const useGetMinipoolCount = () => {
 export const useRewardStartTime = (stakerAddr: HexString) => {
   const { abi, address } = useStakingContract()
 
-  return useContractRead({
+  return useReadContract({
     address,
     abi,
     functionName: 'getRewardsStartTime',

@@ -3,7 +3,7 @@ import { BigNumber, ethers } from 'ethers'
 import { useToast } from '@chakra-ui/react'
 import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
 import { formatEther } from 'ethers/lib/utils'
-import { useContractWrite, useNetwork, usePrepareContractWrite } from 'wagmi'
+import { useAccount, usePrepareContractWrite, useWriteContract } from 'wagmi'
 
 import useMinipoolStreamlinerContract from './contracts/minipoolStreamliner'
 
@@ -44,7 +44,7 @@ export const useCreateStreamlinedMinipool = (
   onTransactionSuccess: (transactionData: { nodeID: string; hash: string }) => void,
 ) => {
   const { avaxForGGP, avaxForMinipool, avaxForNodeRental } = newMinipool
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const toast = useToast()
   const addRecentTransaction = useAddRecentTransaction()
   const { abi, address } = useMinipoolStreamlinerContract()
@@ -64,7 +64,7 @@ export const useCreateStreamlinedMinipool = (
     },
   })
 
-  const resp = useContractWrite({
+  const resp = useWriteContract({
     ...config,
     async onSuccess(data) {
       const receipt = await data.wait() // wait for the transaction to be mined

@@ -3,7 +3,7 @@ import { Dispatch, FunctionComponent, SetStateAction } from 'react'
 
 import { Flex, Text, useToast } from '@chakra-ui/react'
 import { useChainModal } from '@rainbow-me/rainbowkit'
-import { useAccount, useBalance, useNetwork, useWaitForTransaction } from 'wagmi'
+import { useAccount, useAccount, useBalance, useWaitForTransactionReceipt } from 'wagmi'
 
 import { Button } from '@/common/components/Button'
 import ConnectButton from '@/common/components/ConnectButton'
@@ -30,7 +30,7 @@ export const WizardCreateMinipool: FunctionComponent<WizardCreateMinipoolProps> 
   timeRangeSeconds,
 }): JSX.Element => {
   const { address, isConnected } = useAccount()
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const { openChainModal } = useChainModal()
 
   const toast = useToast()
@@ -46,7 +46,7 @@ export const WizardCreateMinipool: FunctionComponent<WizardCreateMinipoolProps> 
     duration: timeRangeSeconds,
   })
 
-  const { isLoading: isLoadingDepositTransaction } = useWaitForTransaction({
+  const { isLoading: isLoadingDepositTransaction } = useWaitForTransactionReceipt({
     hash: depositData?.hash,
     onSuccess(data) {
       if (data?.transactionHash && data?.status) {

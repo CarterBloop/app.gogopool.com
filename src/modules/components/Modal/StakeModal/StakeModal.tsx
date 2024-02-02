@@ -12,7 +12,7 @@ import {
   ModalOverlay,
   Spacer,
 } from '@chakra-ui/react'
-import { useAccount, useWaitForTransaction } from 'wagmi'
+import { useAccount, useWaitForTransactionReceipt } from 'wagmi'
 
 import ApproveButton from '../../Wizard/components/ApproveButton'
 import { StakeModalFailure } from './StakeModalFailure'
@@ -40,7 +40,7 @@ export const StakeModal: FunctionComponent<StakeModalProps> = ({ onClose }) => {
     reset,
     write: stake,
   } = useStakeGGP(stakeAmount)
-  const { isError, isLoading, isSuccess } = useWaitForTransaction({
+  const { isError, isLoading, isSuccess } = useWaitForTransactionReceipt({
     hash: stakeData?.hash,
   })
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { Box, Flex } from '@chakra-ui/react'
 import useAsyncEffect from 'use-async-effect'
-import { useAccount, useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import { DEFAULT_AVAX, DEFAULT_GGP } from '@/constants/chainDefaults'
 import postEstimator from '@/hooks/useEstimator'
@@ -20,7 +20,7 @@ import { colors } from '@/theme/colors'
 import { WEI_VALUE } from '@/utils/consts'
 
 const CreateMinipool = () => {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const { address } = useAccount()
   const { data: ggpPriceInAvax } = useGetGGPPrice()
   const [showDetails, setShowDetails] = useState(false)

@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react'
 import { Box, Button, Text } from '@chakra-ui/react'
 import { shortenTransactionHash } from '@usedapp/core'
 import Link from 'next/link'
-import { useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import { DEFAULT_OONODZ_LINK, DEFAULT_TRANSACTION_LINK } from '@/constants/chainDefaults'
 import { useMinipoolsByStatus } from '@/hooks/minipool'
@@ -31,7 +31,7 @@ const InfoBox = ({ label, value }) => (
 )
 
 const MQSuccess = ({ formData, transactionData }) => {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const { data: minipoolsPrelaunch } = useMinipoolsByStatus({
     status: 0,
   })

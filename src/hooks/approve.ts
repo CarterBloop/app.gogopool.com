@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers'
 
 import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
 import { formatEther } from 'ethers/lib/utils'
-import { useContractWrite, usePrepareContractWrite } from 'wagmi'
+import { useWriteContract } from 'wagmi'
 
 import useStakingContract from './contracts/staking'
 import useTokenGGPContract from './contracts/tokenGGP'
@@ -13,29 +13,51 @@ export const useApproveGGP = (amount: BigNumber) => {
   const { address: stakingAddr } = useStakingContract()
   const addRecentTransaction = useAddRecentTransaction()
 
-  const { config, error: prepareError } = usePrepareContractWrite({
-    address: ggpTokenAddress,
-    abi,
-    functionName: 'approve',
-    args: [stakingAddr, amount],
-    onError(error) {
-      console.warn(error)
-    },
-  })
+  // Removed usePrepareContractWrite - Wagmi v2
+  const prepareError = false
 
-  const resp = useContractWrite({
-    ...config,
-    onSuccess(data) {
+  // Updated to useWriteContract - Wagmi v2
+  const {
+    data: txhash,
+    error,
+    isError,
+    isIdle,
+    isPending: isLoading,
+    isSuccess,
+    status,
+    writeContract,
+  } = useWriteContract()
+
+  // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+  const approveGGP = () => {
+    try {
+      writeContract({
+        abi,
+        address: ggpTokenAddress,
+        functionName: 'approve',
+        args: [stakingAddr, amount],
+      })
       addRecentTransaction({
-        hash: data.hash,
+        hash: txhash,
         description: `Approve ${formatEther(amount)} GGP`,
       })
-    },
-    onError(error) {
+    } catch (error) {
       console.warn(error)
-    },
-  })
+    }
+  }
 
+  const resp = {
+    data: { hash: txhash },
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    write: approveGGP,
+    status,
+  }
+
+  // Return same object as v0
   return {
     ...resp,
     prepareError,

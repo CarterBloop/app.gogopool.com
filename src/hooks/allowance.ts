@@ -1,4 +1,4 @@
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 
 import useStakingContract from './contracts/staking'
 import useTokenGGPContract from './contracts/tokenGGP'
@@ -9,12 +9,13 @@ const useGGPAllowance = (address: HexString) => {
   const { abi, address: tokenAddr } = useTokenGGPContract()
   const { address: stakingAddr } = useStakingContract()
 
-  const resp = useContractRead({
+  const resp = useReadContract({
     address: tokenAddr as `0x${string}`,
     abi: abi,
     functionName: 'allowance',
     args: [address, stakingAddr],
-    watch: true,
+    // No watch param in wagmi v2
+    // watch: true,
   })
 
   return resp

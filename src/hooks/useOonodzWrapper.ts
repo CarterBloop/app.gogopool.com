@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers'
 
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 
 import useOonodzWrapper from './contracts/oonodzwrapper'
 
@@ -13,7 +13,7 @@ export const useFindBestRateAndPlan = (
   const { abi, address } = useOonodzWrapper()
   const durationNumber = parseInt(duration.match(/\d+/)?.[0] || '0', 10)
 
-  const { data, error, isError, isLoading } = useContractRead({
+  const { data, error, isError, isLoading } = useReadContract({
     address,
     abi,
     functionName: 'findBestRateAndPlan',

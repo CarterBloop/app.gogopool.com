@@ -6,7 +6,7 @@ import axios from 'axios'
 import Image from 'next/image'
 import { FiCalendar, FiMapPin } from 'react-icons/fi'
 import useAsyncEffect from 'use-async-effect'
-import { useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import { fuji } from '@/config/chains'
 import {
@@ -21,7 +21,7 @@ import { colors } from '@/theme/colors'
 import avaxIcon from '/public/assets/img/token/avax.png'
 
 const MQForm = ({ formData, setFormData, showHardwareCostLoading }) => {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const [avaxPrice, setAvaxPrice] = useState(null)
 
   const { data: nodeRentalFeeUSD } = useFindBestRateAndPlan(

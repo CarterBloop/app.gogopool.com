@@ -13,7 +13,7 @@ import {
   ModalOverlay,
   Spacer,
 } from '@chakra-ui/react'
-import { useAccount, useWaitForTransaction } from 'wagmi'
+import { useAccount, useWaitForTransactionReceipt } from 'wagmi'
 
 import { ClaimAndRestakeModalFailure } from './ClaimAndRestakeModalFailure'
 import { ClaimAndRestakeModalPending } from './ClaimAndRestakeModalPending'
@@ -48,7 +48,7 @@ export const ClaimAndRestakeModal: FunctionComponent<ClaimAndRestakeModalProps> 
     reset,
     write: claim,
   } = useClaimAndRestake(claimAmount, restakeAmount, () => setCurrentStep(3))
-  const { isError, isLoading, isSuccess } = useWaitForTransaction({
+  const { isError, isLoading, isSuccess } = useWaitForTransactionReceipt({
     hash: claimData?.hash,
   })
   const futureRatio = useGetFutureRatio({

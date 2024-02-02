@@ -5,7 +5,7 @@ import { useInterval, useToast } from '@chakra-ui/react'
 import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
 import { formatEther } from 'ethers/lib/utils'
 import ms from 'ms'
-import { useContractRead, useContractWrite, usePrepareContractWrite, useSigner } from 'wagmi'
+import { usePrepareContractWrite, useReadContract, useSigner, useWriteContract } from 'wagmi'
 
 import useMinipoolManagerContract from './contracts/minipoolManager'
 
@@ -64,7 +64,7 @@ export const useCreateMinipool = ({
     },
   })
 
-  const resp = useContractWrite({
+  const resp = useWriteContract({
     ...config,
 
     onSuccess(data) {
@@ -131,11 +131,11 @@ export const useMinipoolsByStatus = ({
 }: UseMinipoolsByStatusParams) => {
   const { abi, address } = useMinipoolManagerContract()
 
-  const resp = useContractRead({
+  const resp = useReadContract({
     address,
     abi,
     functionName: 'getMinipools',
-    args: [status, offset, limit],
+    args: [status, BigInt(offset.toNumber()), BigInt(limit.toNumber())],
   })
 
   return resp
@@ -209,7 +209,7 @@ export const useCancelMinipool = (nodeId: HexString) => {
     },
   })
 
-  const write = useContractWrite({
+  const write = useWriteContract({
     ...config,
     onSuccess(data) {
       addRecentTransaction({
@@ -272,7 +272,7 @@ export const useWithdrawMinipoolFunds = (nodeId: HexString) => {
   })
 
   return {
-    ...useContractWrite({
+    ...useWriteContract({
       ...config,
       onSuccess(data) {
         addRecentTransaction({
@@ -284,7 +284,7 @@ export const useWithdrawMinipoolFunds = (nodeId: HexString) => {
     prepareError,
   }
 
-  // const write = useContractWrite({
+  // const write = useWriteContract({
   //   ...config,
   //   async onSuccess(data) {
   //     addRecentTransaction({

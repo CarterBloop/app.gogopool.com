@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers'
 import { Dispatch, SetStateAction } from 'react'
 
 import { useChainModal, useConnectModal } from '@rainbow-me/rainbowkit'
-import { useAccount, useNetwork, useWaitForTransaction } from 'wagmi'
+import { useAccount, useWaitForTransactionReceipt } from 'wagmi'
 
 import { Button } from '@/common/components/Button'
 import useApproveGGP from '@/hooks/approve'
@@ -15,12 +15,12 @@ export interface ApproveProps {
 const ApproveButton = ({ amount, setApproveStatus }: ApproveProps) => {
   const { isConnected } = useAccount()
   const { openConnectModal } = useConnectModal()
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const { openChainModal } = useChainModal()
 
   const { data, isLoading: isApproveLoading, write: approve } = useApproveGGP(amount)
 
-  const { isLoading } = useWaitForTransaction({
+  const { isLoading } = useWaitForTransactionReceipt({
     hash: data?.hash,
     onSuccess: (data) => {
       if (data.status === 1) {

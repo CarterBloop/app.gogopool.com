@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { useToast } from '@chakra-ui/react'
 import { parseEther } from 'ethers/lib/utils.js'
-import { useAccount, useWaitForTransaction } from 'wagmi'
+import { useAccount, useWaitForTransactionReceipt } from 'wagmi'
 
 import { Button } from '@/common/components/Button'
 import ConnectButton from '@/common/components/ConnectButton'
@@ -31,7 +31,7 @@ const StakeButton = ({ ggpAmount, lockCurrentStep, nextStep }: StakeButtonProps)
     writeAsync: stake,
   } = useStakeGGP(ggpAmount)
 
-  const { isLoading, status } = useWaitForTransaction({
+  const { isLoading, status } = useWaitForTransactionReceipt({
     hash: stakeData?.hash,
   })
 

@@ -3,7 +3,7 @@ import { FunctionComponent, useEffect, useState } from 'react'
 
 import { Divider, Flex, Spacer, Text } from '@chakra-ui/react'
 import { formatEther, parseEther } from 'ethers/lib/utils.js'
-import { useAccount, useBalance, useNetwork } from 'wagmi'
+import { useAccount, useAccount, useBalance } from 'wagmi'
 
 import ApproveButton from '../components/ApproveButton'
 import { ErrorMessage } from '../components/ErrorMessage'
@@ -38,7 +38,7 @@ export const WizardStakeGGP: FunctionComponent<WizardStakeGGPProps> = ({
   nextStep,
   prevStep,
 }): JSX.Element => {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const defaultAVAXAmount: BigNumber = DEFAULT_AVAX[chain?.id] || parseEther('0')
 
   const ggpPrice = useGetGGPPrice()

@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers'
 import { useToast } from '@chakra-ui/react'
 import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
 import { formatEther } from 'ethers/lib/utils'
-import { useContractWrite, usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite, useWriteContract } from 'wagmi'
 
 import useTokenContract from './contracts/tokenggAVAX'
 
@@ -36,7 +36,7 @@ const useRedeem = (amount: BigNumber) => {
     },
   })
 
-  const resp = useContractWrite({
+  const resp = useWriteContract({
     ...config,
     onSuccess(data) {
       addRecentTransaction({

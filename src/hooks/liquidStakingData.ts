@@ -1,4 +1,4 @@
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 
 import useExchangeRate from './ggexchange'
 import { useGetStakerCount } from './useStake'
@@ -11,17 +11,18 @@ const useLiquidStakingData = () => {
 
   const { data: ggAvaxExchangeRate, isLoading: isExchangeRateLoading } = useExchangeRate()
 
-  const { data: totalStakedAVAX, isLoading: isStakingBalanceLoading } = useContractRead({
+  const { data: totalStakedAVAX, isLoading: isStakingBalanceLoading } = useReadContract({
     address: ggAVAXAddr,
     abi: ggAVAXInterface,
     functionName: 'totalReleasedAssets',
   })
 
-  const { data: rewardsCycleLength, isLoading: isRewardsCycleLengthLoading } = useContractRead({
+  const { data: rewardsCycleLength, isLoading: isRewardsCycleLengthLoading } = useReadContract({
     address: ggAVAXAddr,
     abi: ggAVAXInterface,
     functionName: 'rewardsCycleLength',
-    watch: true,
+    // No watch param in wagmi v2
+    // watch: true,
   })
 
   const { data: stakerCount } = useGetStakerCount()

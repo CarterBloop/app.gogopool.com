@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react'
 
 import { Box, Heading, Stack, Text } from '@chakra-ui/react'
 import Image from 'next/image'
-import { useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import { wizardSteps } from './data'
 
@@ -13,7 +13,7 @@ export interface WizardContentProps {
 }
 
 export const WizardContent: FunctionComponent<WizardContentProps> = ({ step }): JSX.Element => {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const defaultAvax = DEFAULT_AVAX[chain?.id] || 0
   const wizard = wizardSteps({ defaultAvax }).find((wizard) => wizard.step === step)
 

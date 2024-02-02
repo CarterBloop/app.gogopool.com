@@ -3,7 +3,7 @@ import { FunctionComponent } from 'react'
 
 import { Divider, Flex, FormLabel, Spacer, Text } from '@chakra-ui/react'
 import { useChainModal } from '@rainbow-me/rainbowkit'
-import { useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import { GGPPillUnit } from '../../Dashboard/Cards/GGPPillUnit'
 import { ErrorMessage } from '../../Wizard/components/ErrorMessage'
@@ -32,7 +32,7 @@ export const UnstakeInput: FunctionComponent<UnstakeInputProps> = ({
   withdraw,
   withdrawAmount,
 }) => {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const { openChainModal } = useChainModal()
 
   const ratio = useGetFutureRatio({ additionalGgp: BigNumber.from(0).sub(withdrawAmount) })

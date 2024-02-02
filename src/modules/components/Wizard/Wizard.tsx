@@ -11,7 +11,7 @@ import {
 
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { Box, Flex } from '@chakra-ui/react'
-import { useAccount, useNetwork } from 'wagmi'
+import { useAccount, useAccount } from 'wagmi'
 
 import { WizardContent } from './WizardContent'
 import { WizardHeader } from './WizardHeader'
@@ -33,7 +33,7 @@ export const Wizard: FunctionComponent<WizardProps> = ({
   currentStep,
   setCurrentStep,
 }): JSX.Element => {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
 
   const [formattedNodeId, setFormattedNodeId] = useState<HexString>()
 

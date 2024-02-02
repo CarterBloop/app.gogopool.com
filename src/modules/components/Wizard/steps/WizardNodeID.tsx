@@ -2,7 +2,7 @@ import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react'
 
 import { CheckCircleIcon, WarningIcon } from '@chakra-ui/icons'
 import { InputGroup, InputLeftElement, Select, Spinner } from '@chakra-ui/react'
-import { useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import CodeCaretIcon from '@/common/components/CustomIcon/CodeCaretIcon'
 import { Input } from '@/common/components/Input'
@@ -33,7 +33,7 @@ export const WizardNodeID: FunctionComponent<WizardNodeIDProps> = ({
   setFormattedNodeId,
   timeRange,
 }): JSX.Element => {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
 
   const [nodeId, setNodeId] = useState('')
   const [isSSR, setIsSSR] = useState(true)

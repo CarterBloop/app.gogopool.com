@@ -12,7 +12,7 @@ import {
   ModalOverlay,
   Spacer,
 } from '@chakra-ui/react'
-import { useWaitForTransaction } from 'wagmi'
+import { useWaitForTransactionReceipt } from 'wagmi'
 
 import { UnstakeModalFailure } from './UnstakeModalFailure'
 import { UnstakeModalForm } from './UnstakeModalForm'
@@ -31,7 +31,7 @@ interface UnstakeModalProps {
 export const UnstakeModal: FunctionComponent<UnstakeModalProps> = ({ onClose }) => {
   const [withdrawAmount, setWithdrawAmount] = useState(BigNumber.from(0))
   const { data: claimData, reset, write: withdraw } = useWithdrawGGP(withdrawAmount)
-  const { isError, isLoading, isSuccess } = useWaitForTransaction({
+  const { isError, isLoading, isSuccess } = useWaitForTransactionReceipt({
     hash: claimData?.hash,
   })
 

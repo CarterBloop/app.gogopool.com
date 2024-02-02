@@ -15,7 +15,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { formatUnits } from 'ethers/lib/utils'
-import { useWaitForTransaction } from 'wagmi'
+import { useWaitForTransactionReceipt } from 'wagmi'
 
 import WithdrawMinipoolPendingModal from './WithdrawMinipoolPendingModal'
 
@@ -39,7 +39,7 @@ export const WithdrawMinipoolModal: FunctionComponent<WithdrawMinipoolModalProps
   setWithdrawError,
 }) => {
   const { data: withdrawData, write: withdraw } = useWithdrawMinipoolFunds(minipool.nodeID)
-  const { isError, isLoading, isSuccess } = useWaitForTransaction({
+  const { isError, isLoading, isSuccess } = useWaitForTransactionReceipt({
     hash: withdrawData?.hash,
   })
   const toast = useToast()

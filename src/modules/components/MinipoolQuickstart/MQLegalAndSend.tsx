@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Box, Button, Checkbox, Link, useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import useAsyncEffect from 'use-async-effect'
-import { useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import { DEFAULT_AVAX, DEFAULT_GGP } from '@/constants/chainDefaults'
 import { useCreateStreamlinedMinipool } from '@/hooks/useMinipoolStreamliner'
@@ -14,7 +14,7 @@ import { colors } from '@/theme/colors'
 const weiValue = BigNumber.from('1000000000000000000') // represents 1 Ether in wei (10^18)
 
 const MQLegalAndSend = ({ formData, onCreationSuccess, setTransactionData }) => {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
 
   const [avaxPrice, setAvaxPrice] = useState(null)
   const [accept, setAccept] = useState(false)

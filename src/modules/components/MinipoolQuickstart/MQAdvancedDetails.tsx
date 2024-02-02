@@ -1,7 +1,7 @@
 import { Box, Flex, Link, Text } from '@chakra-ui/react'
 import { formatEther } from 'ethers/lib/utils.js'
 import { FiInfo } from 'react-icons/fi'
-import { useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import MQLegalAndSend from './MQLegalAndSend'
 
@@ -38,7 +38,7 @@ const MQAdvancedDetails = ({
   onCreationSuccess,
   setTransactionData,
 }) => {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   return (
     <Box
       alignItems="flex-start"

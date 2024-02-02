@@ -1,7 +1,7 @@
 import { FunctionComponent, MutableRefObject } from 'react'
 
 import { Box, Divider, Stack, Text, useBreakpointValue, useTheme } from '@chakra-ui/react'
-import { useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import { wizardSteps } from './data'
 
@@ -19,7 +19,7 @@ export const WizardHeader: FunctionComponent<WizardHeaderProps> = ({
 }): JSX.Element => {
   const { colors } = useTheme()
   const size = useBreakpointValue({ base: 16, md: 21 })
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
   const defaultAvax = DEFAULT_AVAX[chain?.id] || 0
 
   return (

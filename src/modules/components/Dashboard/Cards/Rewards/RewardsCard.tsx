@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Button } from '@chakra-ui/react'
 import { formatEther } from 'ethers/lib/utils.js'
 import useAsyncEffect from 'use-async-effect'
-import { useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import CardTitle from '../CardTitle'
 import DashboardButtonCard from '../DashboardButtonCard'
@@ -32,7 +32,7 @@ export default function RewardsCard({
   openClaimModal,
   rewardsToClaim,
 }: Props) {
-  const { chain } = useNetwork()
+  const { chain } = useAccount()
 
   const [apy, setApy] = useState(BigNumber.from(0))
 

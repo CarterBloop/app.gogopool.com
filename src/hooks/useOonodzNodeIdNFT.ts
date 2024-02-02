@@ -1,4 +1,4 @@
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 
 import { nodeHexToID, nodeIDRemovePrefix } from '../utils/index'
 import useOonodzNodeIdNFT from './contracts/oonodzNodeIdNFT'
@@ -11,7 +11,7 @@ export const useIsNodeIdActive = (nodeID: HexString, watch = true) => {
   let nodeIDString = nodeHexToID(nodeID)
   nodeIDString = nodeIDRemovePrefix(nodeIDString)
 
-  const { data, error, isError, isLoading } = useContractRead({
+  const { data, error, isError, isLoading } = useReadContract({
     address,
     abi,
     functionName: 'isNodeIdActive',

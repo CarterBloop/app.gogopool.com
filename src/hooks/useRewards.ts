@@ -1,4 +1,4 @@
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 
 import useProtocolDaoContract from './contracts/protocolDAO'
 import useRewardsPoolContract from './contracts/rewardsPool'
@@ -9,7 +9,7 @@ import useRewardsPoolContract from './contracts/rewardsPool'
 export const useRewardCycleStartTime = (watch = true) => {
   const { abi, address } = useRewardsPoolContract()
 
-  return useContractRead({
+  return useReadContract({
     address,
     abi,
     functionName: 'getRewardsCycleStartTime',
@@ -20,7 +20,7 @@ export const useRewardCycleStartTime = (watch = true) => {
 export const useGetRewardCycleLength = (watch = true) => {
   const { abi, address } = useProtocolDaoContract()
 
-  return useContractRead({
+  return useReadContract({
     address,
     abi,
     functionName: 'getRewardsCycleSeconds',
